@@ -1,9 +1,11 @@
 package com.example.alura_music.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "artistas")
 public class Artista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +14,6 @@ public class Artista {
     private Tipo tipo;
 
 
-
+    @Transient
     private List<Musica> musicas;
 }
