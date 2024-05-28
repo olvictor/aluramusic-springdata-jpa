@@ -4,6 +4,7 @@ import com.example.alura_music.models.Artista;
 import com.example.alura_music.models.Musica;
 import com.example.alura_music.models.Tipo;
 import com.example.alura_music.repository.ArtistaRepository;
+import com.example.alura_music.services.consultaChatGPT;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,9 @@ public class Principal {
                         break;
                     case 3:
                         listarMusicas();
+                        break;
+                    case 4:
+                        buscarMusicasPorArtista();
                         break;
                     default:
                         System.out.println("Opção inválida !");
@@ -108,12 +112,24 @@ public class Principal {
         System.out.println("Digite o nome do artista :");
         var nomeArtista = leitura.nextLine();
 
+        Optional<Artista> artista = repository.findByNomeContainingIgnoreCase(nomeArtista);
 
+        if(artista.isPresent()){
+            List<Musica> musicas = repository.buscarMusicaPorArtista(artista.get().getNome());
+            musicas.forEach(System.out::println);
+        }else{
+            System.out.println("Artista não encontrado .");
+        }
 
     }
 
     private void pesquisarDadosArtista(){
+        System.out.println("Qual artista gostaria de pesquisar sobre ?");
+        var nomeArtista = leitura.nextLine();
 
+        var resposta = consultaChatGPT.obterInformacao(nomeArtista);
+
+        System.out.println(resposta);
     }
 
 }

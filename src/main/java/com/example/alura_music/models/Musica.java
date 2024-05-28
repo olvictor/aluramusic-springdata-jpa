@@ -28,8 +28,7 @@ public class Musica {
         return "nome='" + nome + '\'' +
                 ", album='" + album + '\'' +
                 ", duracaoEmSegundos=" + duracaoEmSegundos +
-                ", artista=" + artista.getNome() +
-                '}';
+                ", artista=" + artista.getNome();
     }
 
     public Long getId() {
