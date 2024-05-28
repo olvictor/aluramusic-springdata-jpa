@@ -13,8 +13,24 @@ public class Musica {
     private String album;
     private Long duracaoEmSegundos;
 
-    @Transient
+    @ManyToOne
     private Artista artista;
+
+    public Musica(){};
+    public Musica(String nomeMusica, String nomeAlbum, Long duracao) {
+        this.nome = nomeMusica;
+        this.album = nomeAlbum;
+        this.duracaoEmSegundos = duracao;
+    }
+
+    @Override
+    public String toString() {
+        return "nome='" + nome + '\'' +
+                ", album='" + album + '\'' +
+                ", duracaoEmSegundos=" + duracaoEmSegundos +
+                ", artista=" + artista.getNome() +
+                '}';
+    }
 
     public Long getId() {
         return id;

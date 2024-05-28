@@ -1,10 +1,12 @@
 package com.example.alura_music.principal;
 
 import com.example.alura_music.models.Artista;
+import com.example.alura_music.models.Musica;
 import com.example.alura_music.models.Tipo;
 import com.example.alura_music.repository.ArtistaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -42,7 +44,10 @@ public class Principal {
                         salvarArtista();
                         break;
                     case 2:
-
+                        cadastrarMusica();
+                        break;
+                    case 3:
+                        listarMusicas();
                         break;
                     default:
                         System.out.println("Opção inválida !");
@@ -66,6 +71,49 @@ public class Principal {
     }
 
 
+    private void cadastrarMusica(){
+        System.out.println("Digite o nome do artista :");
+        var nomeArtista = leitura.nextLine();
 
+        Optional<Artista> artista = repository.findByNomeContainingIgnoreCase(nomeArtista);
+        if(artista.isPresent()){
+            System.out.println("Digite o nome da musica :");
+        var nomeMusica = leitura.nextLine();
+
+
+        System.out.println("Digite o album :");
+        var nomeAlbum = leitura.nextLine();
+
+        System.out.println("Digite a duracao em segundos :");
+        var duracao = leitura.nextLong();
+
+        Musica musica = new Musica(nomeMusica,nomeAlbum,duracao);
+        musica.setArtista(artista.get());
+        artista.get().getMusicas().add(musica);
+        repository.save(artista.get());
+
+        }else{
+            System.out.println("Artista não encontrado, registre um artista com esse nome .");
+        }
+
+
+    }
+
+    private void listarMusicas(){
+        List<Artista> artistas = repository.findAll();
+        artistas.forEach(System.out::println);
+    }
+
+    private void buscarMusicasPorArtista(){
+        System.out.println("Digite o nome do artista :");
+        var nomeArtista = leitura.nextLine();
+
+
+
+    }
+
+    private void pesquisarDadosArtista(){
+
+    }
 
 }

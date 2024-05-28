@@ -2,6 +2,7 @@ package com.example.alura_music.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,10 @@ public class Artista {
     private Tipo tipo;
 
 
-    @Transient
-    private List<Musica> musicas;
+    @OneToMany(mappedBy = "artista",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Musica> musicas = new ArrayList<>();
 
+    public Artista(){}
     public Artista(String nome, String tipo){
         this.nome = nome;
         this.tipo = Tipo.fromString(tipo);
@@ -27,11 +29,10 @@ public class Artista {
 
     @Override
     public String toString() {
-        return "Artista{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
+        return
+                "nome='" + nome + '\'' +
                 ", tipo=" + tipo +
-                '}';
+                ", musicas=" + musicas ;
     }
 
     public Long getId() {
