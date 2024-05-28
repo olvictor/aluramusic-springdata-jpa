@@ -1,6 +1,7 @@
 package com.example.alura_music.principal;
 
 import com.example.alura_music.models.Artista;
+import com.example.alura_music.models.Tipo;
 import com.example.alura_music.repository.ArtistaRepository;
 
 import java.util.List;
@@ -16,18 +17,55 @@ public class Principal {
     }
 
     public void exibirMenu(){
-        System.out.println("Digite o nome do artista :");
-        var nomeArtista = leitura.nextLine();
-        System.out.println("Esse artista é solo, banda ou dupla ?");
-        var tipo = leitura.nextLine();
-//        List<Artista> artistas = repository.findAll();
-        salvarArtista(nomeArtista,tipo);
+        var opcao = -1;
+
+        while (opcao != 0){
+            System.out.println("""
+                    *** Alura Music  ***
+                    1- Cadastrar artistas
+                    2- Cadastrar músicas 
+                    3- Listar músicas
+                    4- Buscar músicas por artistas
+                    5- Pesquisas dados sobre um artista
+                    
+                    
+                    0- sair
+                    """);
+
+            opcao = leitura.nextInt();
+            leitura.nextLine();
+                switch (opcao){
+                    case 0:
+                        opcao = 0;
+                        break;
+                    case 1:
+                        salvarArtista();
+                        break;
+                    case 2:
+
+                        break;
+                    default:
+                        System.out.println("Opção inválida !");
+                }
+        }
     }
 
 
 
-    public void  salvarArtista(String nome, String tipo){
-        Artista artista = new Artista(nome, tipo);
-        repository.save(artista);
+    private void salvarArtista(){
+
+            System.out.println("Digite o nome do artista :");
+            var nome = leitura.nextLine();
+
+            System.out.println("Esse artista é solo,dupla ou banda ?");
+            String tipo = leitura.nextLine();
+
+            Artista artista = new Artista(nome, tipo);
+            repository.save(artista);
+
     }
+
+
+
+
 }
